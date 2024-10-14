@@ -1,31 +1,30 @@
 ﻿using System;
 
-namespace PropertyHook
+namespace PropertyHook.PHPointer;
+
+/// <summary>
+/// A dynamic pointer starting from a fixed address.
+/// </summary>
+public class PHPointerBase : PHPointer
 {
     /// <summary>
-    /// A dynamic pointer starting from a fixed address.
+    /// The fixed address to start from.
     /// </summary>
-    public class PHPointerBase : PHPointer
+    public IntPtr BaseAddress { get; set; }
+
+    /// <summary>
+    /// Creates a new base pointer.
+    /// </summary>
+    public PHPointerBase(PHook parent, IntPtr address, params int[] offsets) : base(parent, offsets)
     {
-        /// <summary>
-        /// The fixed address to start from.
-        /// </summary>
-        public IntPtr BaseAddress { get; set; }
+        BaseAddress = address;
+    }
 
-        /// <summary>
-        /// Creates a new base pointer.
-        /// </summary>
-        public PHPointerBase(PHook parent, IntPtr address, params int[] offsets) : base(parent, offsets)
-        {
-            BaseAddress = address;
-        }
-
-        /// <summary>
-        /// Returns the base address.
-        /// </summary>
-        protected override IntPtr ResolveSpecific()
-        {
-            return BaseAddress;
-        }
+    /// <summary>
+    /// Returns the base address.
+    /// </summary>
+    public override IntPtr ResolveSpecific()
+    {
+        return BaseAddress;
     }
 }

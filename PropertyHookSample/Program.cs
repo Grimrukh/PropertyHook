@@ -3,11 +3,11 @@ using System.Threading;
 
 namespace PropertyHookSample
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
-            SampleHook hook = new SampleHook();
+            var hook = new SampleHook();
             hook.Start();
 
             while (!Console.KeyAvailable)

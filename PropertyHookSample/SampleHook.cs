@@ -1,13 +1,14 @@
 ﻿using PropertyHook;
 using System;
+using PropertyHook.PHPointer;
 
 namespace PropertyHookSample
 {
     public class SampleHook : PHook
     {
-        private PHPointer WorldChrBase;
-        private PHPointer ChrData1;
-        private PHPointer ChrData2;
+        readonly PHPointer WorldChrBase;
+        readonly PHPointer ChrData1;
+        readonly PHPointer ChrData2;
 
         public SampleHook() : base(5000, 5000, p => p.ProcessName == "DarkSoulsRemastered")
         {

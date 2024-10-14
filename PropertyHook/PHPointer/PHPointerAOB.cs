@@ -1,43 +1,47 @@
 ﻿using System;
 
-namespace PropertyHook
+namespace PropertyHook.PHPointer;
+
+/// <summary>
+/// A dynamic pointer starting from an array of bytes scanned for in the target process.
+/// </summary>
+public abstract class PHPointerAOB : PHPointer
 {
     /// <summary>
-    /// A dynamic pointer starting from an array of bytes scanned for in the target process.
+    /// The AOB to scan for.
     /// </summary>
-    public abstract class PHPointerAOB : PHPointer
+    public byte?[] AOB { get; set; }
+
+    /// <summary>
+    /// The result of the AOB scan.
+    /// </summary>
+    public IntPtr AOBResult;
+
+    /// <summary>
+    /// Creates a new AOB pointer.
+    /// </summary>
+    public PHPointerAOB(PHook parent, byte?[] aob, int[] offsets) : base(parent, offsets)
     {
-        /// <summary>
-        /// The AOB to scan for.
-        /// </summary>
-        public byte?[] AOB { get; set; }
+        AOB = aob;
+    }
 
-        /// <summary>
-        /// The result of the AOB scan.
-        /// </summary>
-        protected IntPtr AOBResult;
+    /// <summary>
+    /// Returns the result of the AOB scan.
+    /// </summary>
+    public override IntPtr ResolveSpecific()
+    {
+        return AOBResult;
+    }
 
-        /// <summary>
-        /// Creates a new AOB pointer.
-        /// </summary>
-        public PHPointerAOB(PHook parent, byte?[] aob, int[] offsets) : base(parent, offsets)
-        {
-            AOB = aob;
-        }
+    /// <summary>
+    /// Scan for the AOB and store the adddress in `AOBResult`.
+    /// Returns `true` if the scan succeeded and `false` otherwise.
+    /// Called automatically by `PHook` for registered `PHPointerAOB`s.
+    /// </summary>
+    public abstract bool ScanAOB(AOBScanner scanner);
 
-        /// <summary>
-        /// Returns the result of the AOB scan.
-        /// </summary>
-        protected override IntPtr ResolveSpecific()
-        {
-            return AOBResult;
-        }
-
-        internal abstract bool ScanAOB(AOBScanner scanner);
-
-        internal void DumpAOB()
-        {
-            AOBResult = IntPtr.Zero;
-        }
+    internal void DumpAOB()
+    {
+        AOBResult = IntPtr.Zero;
     }
 }
