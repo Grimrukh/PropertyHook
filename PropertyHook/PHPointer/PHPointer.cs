@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace PropertyHook.PHPointer;
+namespace PropertyHook;
 
 /// <summary>
 /// A dynamic pointer starting from an AOB, fixed address, or other pointer. Provides functions for reading and writing memory.

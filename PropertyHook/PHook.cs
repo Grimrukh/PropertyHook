@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading;
-using PropertyHook.PHPointer;
 
 namespace PropertyHook;
 
@@ -203,7 +202,7 @@ public abstract class PHook
     /// <summary>
     /// Creates and registers a new relative AOB pointer.
     /// </summary>
-    public PHPointer.PHPointer RegisterRelativeAOB(byte?[] aob, int addressOffset, int instructionSize, params int[] offsets)
+    public PHPointer RegisterRelativeAOB(byte?[] aob, int addressOffset, int instructionSize, params int[] offsets)
     {
         var pointer = new PHPointerAOBRelative(this, aob, addressOffset, instructionSize, offsets);
         AOBPointers.Add(pointer);
@@ -213,7 +212,7 @@ public abstract class PHook
     /// <summary>
     /// Create and register a new relative AOB pointer with a CE-style AOB string.
     /// </summary>
-    public PHPointer.PHPointer RegisterRelativeAOB(string aob, int addressOffset, int instructionSize, params int[] offsets)
+    public PHPointer RegisterRelativeAOB(string aob, int addressOffset, int instructionSize, params int[] offsets)
     {
         return RegisterRelativeAOB(AOBScanner.StringToAOB(aob), addressOffset, instructionSize, offsets);
     }
@@ -221,7 +220,7 @@ public abstract class PHook
     /// <summary>
     /// Creates and registers a new absolute AOB pointer.
     /// </summary>
-    public PHPointer.PHPointer RegisterAbsoluteAOB(byte?[] aob, params int[] offsets)
+    public PHPointer RegisterAbsoluteAOB(byte?[] aob, params int[] offsets)
     {
         var pointer = new PHPointerAOBAbsolute(this, aob, offsets);
         AOBPointers.Add(pointer);
@@ -231,7 +230,7 @@ public abstract class PHook
     /// <summary>
     /// Creates and registers a new absolute AOB pointer with a CE-style AOB string.
     /// </summary>
-    public PHPointer.PHPointer RegisterAbsoluteAOB(string aob, params int[] offsets)
+    public PHPointer RegisterAbsoluteAOB(string aob, params int[] offsets)
     {
         return RegisterAbsoluteAOB(AOBScanner.StringToAOB(aob), offsets);
     }
@@ -239,7 +238,7 @@ public abstract class PHook
     /// <summary>
     /// Creates a new base address pointer.
     /// </summary>
-    public PHPointer.PHPointer CreateBasePointer(IntPtr baseAddress, params int[] offsets)
+    public PHPointer CreateBasePointer(IntPtr baseAddress, params int[] offsets)
     {
         var pointer = new PHPointerBase(this, baseAddress, offsets);
         return pointer;
@@ -248,7 +247,7 @@ public abstract class PHook
     /// <summary>
     /// Creates a new child pointer.
     /// </summary>
-    public PHPointer.PHPointer CreateChildPointer(PHPointer.PHPointer basePointer, params int[] offsets)
+    public PHPointer CreateChildPointer(PHPointer basePointer, params int[] offsets)
     {
         var pointer = new PHPointerChild(this, basePointer, offsets);
         return pointer;
@@ -257,7 +256,7 @@ public abstract class PHook
     /// <summary>
     /// Unregisters an AOB pointer. Returns null.
     /// </summary>
-    public PHPointer.PHPointer UnregisterAOBPointer(PHPointerAOB pointer)
+    public PHPointer UnregisterAOBPointer(PHPointerAOB pointer)
     {
         AOBPointers.Remove(pointer);
         return null;

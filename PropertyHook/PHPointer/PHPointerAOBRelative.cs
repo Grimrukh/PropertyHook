@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PropertyHook.PHPointer;
+namespace PropertyHook;
 
 /// <summary>
 /// A dynamic pointer starting from a relative address found after an array of bytes scanned for in the target process.

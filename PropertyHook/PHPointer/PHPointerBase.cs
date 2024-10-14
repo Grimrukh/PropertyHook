@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PropertyHook.PHPointer;
+namespace PropertyHook;
 
 /// <summary>
 /// A dynamic pointer starting from a fixed address.
