@@ -23,7 +23,7 @@ public class PHPointerChild : PHPointer
     /// <summary>
     /// Returns the final address of the parent pointer.
     /// </summary>
-    public override IntPtr ResolveSpecific()
+    public override IntPtr ResolveBase()
     {
         return BasePointer.Resolve();
     }

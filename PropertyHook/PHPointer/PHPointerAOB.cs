@@ -28,7 +28,7 @@ public abstract class PHPointerAOB : PHPointer
     /// <summary>
     /// Returns the result of the AOB scan.
     /// </summary>
-    public override IntPtr ResolveSpecific()
+    public override IntPtr ResolveBase()
     {
         return AOBResult;
     }

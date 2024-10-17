@@ -24,6 +24,11 @@ public abstract class PHPointer
     public bool IsNonZero => Resolve() != IntPtr.Zero;
 
     /// <summary>
+    /// Whether the specific (base) pointer is non-zero (usually means valid).
+    /// </summary>
+    public bool IsBaseNonZero => ResolveBase() != IntPtr.Zero;
+
+    /// <summary>
     /// Creates a new PHPointer.
     /// </summary>
     protected PHPointer(PHook parent, int[] offsets)
@@ -45,7 +50,7 @@ public abstract class PHPointer
     /// </summary>
     public IntPtr Resolve()
     {
-        IntPtr address = ResolveSpecific();
+        IntPtr address = ResolveBase();
         foreach (int offset in Offsets)
         {
             address = Kernel32.ReadIntPtr(Hook.Handle, address + offset, Hook.Is64Bit);
@@ -69,7 +74,7 @@ public abstract class PHPointer
     /// <summary>
     /// Evaluates the pointer's base address.
     /// </summary>
-    public abstract IntPtr ResolveSpecific();
+    public abstract IntPtr ResolveBase();
 
     /// <summary>
     /// Read length number of bytes from the given offset.

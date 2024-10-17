@@ -27,7 +27,7 @@ public class PHPointerAOBRelative : PHPointerAOB
     }
 
     /// <summary>
-    /// Scan for the AOB and store the adddress in `AOBResult`.
+    /// Scan for the AOB and store the address in `AOBResult`.
     /// Returns `true` if the scan succeeded and `false` otherwise.
     /// Called automatically by `PHook` for registered `PHPointerAOB`s.
     /// </summary>

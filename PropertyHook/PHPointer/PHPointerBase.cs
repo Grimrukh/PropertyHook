@@ -23,7 +23,7 @@ public class PHPointerBase : PHPointer
     /// <summary>
     /// Returns the base address.
     /// </summary>
-    public override IntPtr ResolveSpecific()
+    public override IntPtr ResolveBase()
     {
         return BaseAddress;
     }

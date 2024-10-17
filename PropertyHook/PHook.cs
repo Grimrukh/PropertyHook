@@ -216,6 +216,17 @@ public abstract class PHook
     {
         return RegisterRelativeAOB(AOBScanner.StringToAOB(aob), addressOffset, instructionSize, offsets);
     }
+    
+    /// <summary>
+    /// Shortcut for registering a new relative AOB pointer with standard address offset 0x3 and instruction size 0x7.
+    /// </summary>
+    /// <param name="aob"></param>
+    /// <param name="offsets"></param>
+    /// <returns></returns>
+    public PHPointer RegisterRelativeAOB_3_7(string aob, params int[] offsets)
+    {
+        return RegisterRelativeAOB(AOBScanner.StringToAOB(aob), 0x3, 0x7, offsets);
+    }
 
     /// <summary>
     /// Creates and registers a new absolute AOB pointer.
