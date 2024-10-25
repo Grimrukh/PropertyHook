@@ -17,7 +17,7 @@ public class AOBScanner
     Process Process { get; }
 
     /// <summary>
-    /// Creates a new AOBScanner for the given Process.
+    /// Creates a new AOBScanner for the given Process and read EXECUTE_* memory regions.
     /// </summary>
     public AOBScanner(Process process)
     {
@@ -30,11 +30,21 @@ public class AOBScanner
         do
         {
             var memInfo = new Kernel32.MEMORY_BASIC_INFORMATION();
-            queryResult = Kernel32.VirtualQueryEx(process.Handle, memRegionAddr, out memInfo, (IntPtr)Marshal.SizeOf(memInfo));
+            queryResult = Kernel32.VirtualQueryEx(
+                process.Handle,
+                memRegionAddr,
+                out memInfo,
+                (IntPtr)Marshal.SizeOf(memInfo));
+            
             if (queryResult != 0)
             {
-                if ((memInfo.State & Kernel32.MEM_COMMIT) != 0 && (memInfo.Protect & Kernel32.PAGE_GUARD) == 0 && (memInfo.Protect & PAGE_EXECUTE_ANY) != 0)
+                if (
+                    (memInfo.State & Kernel32.MEM_COMMIT) != 0
+                    && (memInfo.Protect & Kernel32.PAGE_GUARD) == 0
+                    && (memInfo.Protect & PAGE_EXECUTE_ANY) != 0)
+                {
                     memRegions.Add(memInfo);
+                }
                 memRegionAddr = memInfo.BaseAddress + (int)memInfo.RegionSize;
             }
         } while (queryResult != 0 && (ulong)memRegionAddr < (ulong)mainModuleEnd);
@@ -59,6 +69,7 @@ public class AOBScanner
     {
         foreach (IntPtr baseAddress in ReadMemory.Keys)
         {
+            Console.WriteLine($"Base address: {baseAddress.ToInt64():X}");
             byte[] bytes = ReadMemory[baseAddress];
             if (TryScan(bytes, aob, out int index))
                 return baseAddress + index;

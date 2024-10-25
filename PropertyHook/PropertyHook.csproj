@@ -59,6 +59,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AOBChunkScanner.cs" />
     <Compile Include="AOBScanner.cs" />
     <Compile Include="Kernel32.cs" />
     <Compile Include="PHEventArgs.cs" />

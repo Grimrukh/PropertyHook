@@ -92,7 +92,7 @@ public static class Kernel32
     public static extern bool IsWow64Process(IntPtr hProcess, out bool Wow64Process);
 
     [DllImport("kernel32.dll")]
-    public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, IntPtr lpNumberOfBytesRead);
+    public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesRead);
 
     [DllImport("kernel32.dll")]
     public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, IntPtr dwSize, uint flAllocationType, uint flProtect);
@@ -107,19 +107,19 @@ public static class Kernel32
     public static extern uint WaitForSingleObject(IntPtr hHandle, uint dwMilliseconds);
 
     [DllImport("kernel32.dll", SetLastError = true)]
-    public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, IntPtr lpNumberOfBytesWritten);
+    public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, IntPtr nSize, out IntPtr lpNumberOfBytesWritten);
 
 
     public static byte[] ReadBytes(IntPtr handle, IntPtr address, uint length)
     {
         byte[] bytes = new byte[length];
-        ReadProcessMemory(handle, address, bytes, (IntPtr)length, IntPtr.Zero);
+        ReadProcessMemory(handle, address, bytes, (IntPtr)length, out IntPtr _);
         return bytes;
     }
 
     public static bool WriteBytes(IntPtr handle, IntPtr address, byte[] bytes)
     {
-        return WriteProcessMemory(handle, address, bytes, (IntPtr)bytes.Length, IntPtr.Zero);
+        return WriteProcessMemory(handle, address, bytes, (IntPtr)bytes.Length, out IntPtr _);
     }
 
     public static IntPtr ReadIntPtr(IntPtr handle, IntPtr address, bool is64bit)
